@@ -38,11 +38,11 @@
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
 
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/stationery.css" />
-  <link rel="stylesheet" href="css/bouquet.css" />
-  <link rel="stylesheet" href="css/envelope.css" />
+  <!-- Stylesheets (dual-path: supports both css/ subfolder and root files) -->
+  <link rel="stylesheet" href="css/style.css" onerror="this.onerror=null;this.href='style.css';" />
+  <link rel="stylesheet" href="css/stationery.css" onerror="this.onerror=null;this.href='stationery.css';" />
+  <link rel="stylesheet" href="css/bouquet.css" onerror="this.onerror=null;this.href='bouquet.css';" />
+  <link rel="stylesheet" href="css/envelope.css" onerror="this.onerror=null;this.href='envelope.css';" />
 </head>
 <body>
 
@@ -567,16 +567,40 @@
   </footer>
 
   <!-- Scripts -->
+  <!-- Scripts: Supabase CDN + dual-path sequential script loader -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/supabase-client.js"></script>
-  <script src="js/flowers-data.js"></script>
-  <script src="js/flower-svgs.js"></script>
-  <script src="js/audio-synth.js"></script>
-  <script src="js/bouquet-builder.js"></script>
-  <script src="js/letter-editor.js"></script>
-  <script src="js/envelope-anim.js"></script>
-  <script src="js/alphabet-garden.js"></script>
-  <script src="js/share-engine.js"></script>
-  <script src="js/app.js"></script>
+  <script>
+    (function() {
+      const scriptNames = [
+        'supabase-client.js',
+        'flowers-data.js',
+        'flower-svgs.js',
+        'audio-synth.js',
+        'bouquet-builder.js',
+        'letter-editor.js',
+        'envelope-anim.js',
+        'alphabet-garden.js',
+        'share-engine.js',
+        'app.js'
+      ];
+      function loadScriptAt(index) {
+        if (index >= scriptNames.length) return;
+        const file = scriptNames[index];
+        const s = document.createElement('script');
+        s.src = 'js/' + file;
+        s.onerror = function() {
+          // Fallback to root directory if js/ subfolder not found
+          const fb = document.createElement('script');
+          fb.src = file;
+          fb.onload = function() { loadScriptAt(index + 1); };
+          fb.onerror = function() { console.error('Script load error:', file); loadScriptAt(index + 1); };
+          document.body.appendChild(fb);
+        };
+        s.onload = function() { loadScriptAt(index + 1); };
+        document.body.appendChild(s);
+      }
+      loadScriptAt(0);
+    })();
+  </script>
 </body>
 </html>
