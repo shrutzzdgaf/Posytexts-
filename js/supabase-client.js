@@ -10,7 +10,7 @@ class PosySupabaseClient {
   constructor() {
     // 1. Default config from window, localStorage, or environment
     this.url = window.POSY_SUPABASE_URL || localStorage.getItem('posy_supabase_url') || 'https://vhporunwvvvavynocllt.supabase.co';
-    this.anonKey = window.POSY_SUPABASE_ANON_KEY || localStorage.getItem('posy_supabase_anon_key') || '';
+    this.anonKey = window.POSY_SUPABASE_ANON_KEY || localStorage.getItem('posy_supabase_anon_key') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZocG9ydW53dnZ2YXZ5bm9jbGx0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNjkwNDgsImV4cCI6MjEwNTc0NTA0OH0.vPnm3nP23_5gMJu1kC2NFlE54YcZD7pDqJ95zeEcEfs';
     this.client = null;
 
     this.initClient();
