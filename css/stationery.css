@@ -1,0 +1,543 @@
+/* ==========================================================================
+   POSYTEXTS.COM — Vintage Stationery & Scrapbooking Editor Styles
+   1980s English stationery, paper textures, stamps, washi tape, and fonts.
+   ========================================================================== */
+
+/* Letter Section Container */
+.letter-section-container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 5rem;
+}
+
+.stationery-control-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+  background: var(--bg-parchment);
+  border: 2px solid var(--ink-walnut);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 4px 6px 0px var(--ink-walnut);
+}
+
+.stationery-option-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.control-group-title {
+  font-family: var(--font-casual);
+  font-size: 1.15rem;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.stationery-pill-options {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.stationery-paper-option,
+.stationery-font-option {
+  background: #FFFFFF;
+  border: 1.5px solid #D5C7B7;
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--ink-walnut);
+  transition: all 0.15s ease;
+}
+
+.stationery-paper-option.active,
+.stationery-font-option.active {
+  background: var(--blush-pink);
+  color: #FFFFFF;
+  border-color: var(--ink-walnut);
+  box-shadow: 2px 2px 0px var(--ink-walnut);
+}
+
+/* Scrapbooking Sticker & Stamp Drawer */
+.scrapbook-sticker-drawer {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding: 0.5rem 0.2rem;
+}
+
+.scrapbook-sticker-btn {
+  background: #FFFFFF;
+  border: 1.5px solid #D5C7B7;
+  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.08);
+  transition: transform 0.15s var(--ease-spring);
+  flex-shrink: 0;
+}
+
+.scrapbook-sticker-btn:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 2px 4px 0px var(--ink-walnut);
+}
+
+.scrapbook-sticker-btn.washi-btn {
+  width: 52px;
+  position: relative;
+  overflow: hidden;
+}
+
+.washi-preview {
+  display: block;
+  width: 100%;
+  height: 14px;
+  border-left: 2px dashed rgba(0,0,0,0.2);
+  border-right: 2px dashed rgba(0,0,0,0.2);
+}
+
+.clear-stickers-btn {
+  background: none;
+  border: none;
+  color: var(--ink-faint);
+  font-family: var(--font-casual);
+  font-size: 0.9rem;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 0.2rem;
+}
+
+.clear-stickers-btn:hover {
+  color: var(--blush-pink);
+}
+
+/* The Paper Sheet Container */
+.stationery-paper-wrapper {
+  position: relative;
+  margin: 0 auto 2.5rem;
+  max-width: 680px;
+  perspective: 1000px;
+}
+
+.stationery-paper-sheet {
+  position: relative;
+  background: #FFFDF8;
+  border: 1.5px solid #DDD1C1;
+  border-radius: 8px;
+  padding: 3.5rem 3rem 4rem;
+  min-height: 520px;
+  box-shadow: var(--shadow-paper-lift);
+  overflow: hidden;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+/* Scrapbooking Corner Washi Tapes */
+.paper-washi-top-left {
+  position: absolute;
+  top: -10px;
+  left: 30px;
+  width: 90px;
+  height: 25px;
+  background: rgba(168, 213, 186, 0.85);
+  box-shadow: var(--shadow-washi);
+  transform: rotate(-3deg);
+  border-left: 2px dashed rgba(0,0,0,0.15);
+  border-right: 2px dashed rgba(0,0,0,0.15);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.paper-washi-top-right {
+  position: absolute;
+  top: -8px;
+  right: 35px;
+  width: 85px;
+  height: 25px;
+  background: rgba(255, 182, 193, 0.85);
+  box-shadow: var(--shadow-washi);
+  transform: rotate(4deg);
+  border-left: 2px dashed rgba(0,0,0,0.15);
+  border-right: 2px dashed rgba(0,0,0,0.15);
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Vintage English Postal Stamp in Top Right */
+.paper-postal-stamp {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  width: 68px;
+  height: 82px;
+  background: #FFF7ED;
+  border: 2.5px dotted #9C6644;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 1px 2px 6px rgba(0,0,0,0.08);
+  transform: rotate(2deg);
+  pointer-events: none;
+  z-index: 4;
+}
+
+.stamp-inner-art {
+  font-size: 1.8rem;
+}
+
+.stamp-denom {
+  font-family: var(--font-serif);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #7F5539;
+}
+
+.stamp-postmark-ring {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border: 1.5px solid rgba(120, 80, 60, 0.4);
+  border-radius: 50%;
+  right: -15px;
+  bottom: -15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-15deg);
+  font-family: var(--font-casual);
+  font-size: 0.65rem;
+  color: rgba(120, 80, 60, 0.6);
+  pointer-events: none;
+}
+
+/* Paper Styles */
+/* 1. Vintage Cream (Faint English Ruled Lines) */
+.stationery-paper-sheet.vintage-cream {
+  background-color: #FAF5EB;
+  background-image: linear-gradient(#E8DFD3 1px, transparent 1px);
+  background-size: 100% 32px;
+  border-left: 3px double #E0D4C3;
+}
+
+/* 2. Blush Rosewater */
+.stationery-paper-sheet.blush-rosewater {
+  background-color: #FFF0F3;
+  background-image: radial-gradient(circle at 100% 100%, rgba(255, 182, 193, 0.3) 0%, transparent 60%);
+  border: 2px solid #FFD3DC;
+}
+
+/* 3. Mint Grid Journal */
+.stationery-paper-sheet.mint-grid {
+  background-color: #F4F9F6;
+  background-image: 
+    linear-gradient(#E0ECE4 1px, transparent 1px),
+    linear-gradient(90deg, #E0ECE4 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* 4. Lavender Linen */
+.stationery-paper-sheet.lavender-linen {
+  background-color: #FAF7FC;
+  background-image: radial-gradient(circle at 0% 0%, rgba(200, 182, 255, 0.25) 0%, transparent 50%);
+  border: 2px solid #E8D7F1;
+}
+
+/* 5. Airmail Par Avion */
+.stationery-paper-sheet.airmail-avion {
+  background-color: #FFFDF9;
+  border: 8px solid transparent;
+  border-image: repeating-linear-gradient(
+    -45deg,
+    #E63946 0,
+    #E63946 12px,
+    transparent 12px,
+    transparent 18px,
+    #457B9D 18px,
+    #457B9D 30px,
+    transparent 30px,
+    transparent 36px
+  ) 12;
+}
+
+/* Letter Typography & Textarea */
+.stationery-header-fields {
+  margin-bottom: 1.5rem;
+}
+
+.letter-to-field {
+  font-family: var(--font-casual);
+  font-size: 1.15rem;
+  color: var(--ink-faint);
+  margin-bottom: 0.3rem;
+}
+
+.letter-dear-salutation {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  color: var(--ink-walnut);
+}
+
+.letter-main-textarea {
+  width: 100%;
+  min-height: 180px;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 1.35rem;
+  line-height: 32px;
+  color: var(--ink-walnut);
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+.letter-main-textarea::placeholder {
+  color: rgba(92, 74, 66, 0.45);
+}
+
+.letter-sign-off-fields {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.4rem;
+}
+
+.signoff-label {
+  font-family: var(--font-casual);
+  font-size: 1.2rem;
+  color: var(--ink-soft);
+}
+
+.signoff-sender-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px dashed var(--ink-soft);
+  outline: none;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ink-walnut);
+  text-align: right;
+  width: 220px;
+  padding: 0.2rem;
+}
+
+/* Font Classes */
+.font-handwriting,
+.font-handwriting .letter-main-textarea,
+.font-handwriting .signoff-sender-input,
+.font-handwriting .recipient-letter-body {
+  font-family: var(--font-hand) !important;
+  font-size: 1.65rem !important;
+  line-height: 1.5 !important;
+}
+
+.font-playful,
+.font-playful .letter-main-textarea,
+.font-playful .signoff-sender-input,
+.font-playful .recipient-letter-body {
+  font-family: var(--font-casual) !important;
+  font-size: 1.35rem !important;
+  line-height: 1.6 !important;
+}
+
+.font-serif,
+.font-serif .letter-main-textarea,
+.font-serif .signoff-sender-input,
+.font-serif .recipient-letter-body {
+  font-family: var(--font-serif) !important;
+  font-size: 1.2rem !important;
+  line-height: 1.8 !important;
+}
+
+.font-typewriter,
+.font-typewriter .letter-main-textarea,
+.font-typewriter .signoff-sender-input,
+.font-typewriter .recipient-letter-body {
+  font-family: var(--font-mono) !important;
+  font-size: 1.05rem !important;
+  line-height: 1.7 !important;
+  letter-spacing: -0.02em;
+}
+
+/* Placed Scrapbook Items (Stickers, Tapes, Stamps) */
+.placed-stickers-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.placed-scrapbook-item {
+  position: absolute;
+  pointer-events: auto;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.15s ease;
+}
+
+.placed-scrapbook-item:hover {
+  transform: scale(1.15) !important;
+}
+
+.placed-washi-tape {
+  width: 70px;
+  height: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  border-left: 2px dashed rgba(0,0,0,0.15);
+  border-right: 2px dashed rgba(0,0,0,0.15);
+}
+
+.placed-postage-stamp {
+  width: 48px;
+  height: 56px;
+  background: #FFFDF9;
+  border: 2px dotted #8C5338;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 1px 2px 4px rgba(0,0,0,0.1);
+}
+
+.placed-postage-stamp .stamp-art {
+  font-size: 1.3rem;
+}
+
+.placed-postage-stamp .stamp-postmark {
+  font-size: 0.55rem;
+  font-family: var(--font-casual);
+  color: #8C5338;
+}
+
+.placed-doodle {
+  font-size: 2rem;
+  display: inline-block;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.12));
+}
+
+/* Bottom Letter CTA */
+.letter-action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.back-to-posy-btn {
+  background: none;
+  border: none;
+  font-family: var(--font-casual);
+  font-size: 1.25rem;
+  color: var(--ink-soft);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.back-to-posy-btn:hover {
+  color: var(--blush-pink);
+  text-decoration: underline;
+}
+
+.seal-letter-btn {
+  background: var(--blush-pink);
+  color: #FFFFFF;
+  border: 2px solid var(--ink-walnut);
+  border-radius: 999px;
+  padding: 0.9rem 2.2rem;
+  font-family: var(--font-hand);
+  font-size: 1.6rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 4px 5px 0px var(--ink-walnut);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform 0.15s var(--ease-spring), box-shadow 0.15s var(--ease-spring);
+}
+
+.seal-letter-btn:hover {
+  transform: translate(-2px, -2px) scale(1.03);
+  box-shadow: 5px 7px 0px var(--ink-walnut);
+  background: #FF4A6E;
+}
+
+.seal-letter-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px var(--ink-walnut);
+}
+
+/* Inline Email Input Fields in Letter */
+.letter-email-field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.35rem 0 0.9rem;
+}
+
+.envelope-inline-icon {
+  font-size: 1.15rem;
+  color: var(--blush-pink);
+}
+
+.stationery-email-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1.8px dashed rgba(120, 80, 60, 0.45);
+  outline: none;
+  font-family: var(--font-casual);
+  font-size: 1.15rem;
+  color: var(--ink-walnut);
+  width: 320px;
+  max-width: 100%;
+  padding: 0.2rem 0.4rem;
+  transition: border-color 0.2s;
+}
+
+.stationery-email-input:focus {
+  border-bottom-color: var(--blush-pink);
+}
+
+.stationery-email-input::placeholder {
+  color: rgba(92, 74, 66, 0.45);
+  font-size: 1.05rem;
+}
+
+.signoff-email-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1.2px dashed rgba(120, 80, 60, 0.35);
+  outline: none;
+  font-family: var(--font-casual);
+  font-size: 1rem;
+  color: var(--ink-soft);
+  text-align: right;
+  width: 220px;
+  padding: 0.15rem;
+  margin-top: 0.2rem;
+}
+
+.signoff-email-input:focus {
+  border-bottom-color: var(--blush-pink);
+}
+
+.signoff-email-input::placeholder {
+  color: rgba(92, 74, 66, 0.4);
+}

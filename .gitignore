@@ -1,0 +1,16 @@
+# Python & Environment
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+data/posies.json
+data/sent_emails.json
+
+# OS & Editors
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+cloudflared.exe
+*.zip

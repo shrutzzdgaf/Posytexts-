@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>POSYTEXTS.COM — Spell their name. Let it bloom.</title>
+  <meta name="description" content="Turn someone's name into a personalised botanical bouquet, write them a vintage 1980s letter, and send it straight to their inbox. By Shruti Arya." />
+  <meta name="author" content="Shruti Arya" />
+  <link rel="canonical" href="https://posytexts.com/" />
+  
+  <!-- Open Graph & Social Cards -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="POSYTEXTS.COM" />
+  <meta property="og:title" content="POSYTEXTS.COM — Spell their name. Let it bloom." />
+  <meta property="og:description" content="Turn someone's name into a tiny bouquet, write them a little letter, and send it straight to their inbox." />
+  <meta property="og:url" content="https://posytexts.com/" />
+  
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="POSYTEXTS.COM — Spell their name. Let it bloom." />
+  <meta name="twitter:description" content="Turn someone's name into a tiny bouquet, write them a little letter, and send it straight to their inbox." />
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "POSYTEXTS.COM",
+    "url": "https://posytexts.com/",
+    "description": "Spell someone's name to grow an organic botanical posy, write a vintage letter, and send it directly to their inbox.",
+    "creator": {
+      "@type": "Person",
+      "name": "Shruti Arya"
+    },
+    "applicationCategory": "LifestyleApplication"
+  }
+  </script>
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/stationery.css" />
+  <link rel="stylesheet" href="css/bouquet.css" />
+  <link rel="stylesheet" href="css/envelope.css" />
+</head>
+<body>
+
+  <!-- Scrapbook Ambient Background Doodles -->
+  <div class="scrapbook-background-doodles" aria-hidden="true">
+    <span class="floating-doodle doodle-1">✦</span>
+    <span class="floating-doodle doodle-2">🦋</span>
+    <span class="floating-doodle doodle-3">✧</span>
+    <span class="floating-doodle doodle-4">🌸</span>
+    <span class="floating-doodle doodle-5">★</span>
+  </div>
+
+  <!-- Site Navigation Header -->
+  <header class="site-header">
+    <a href="./" class="brand-logo" title="POSYTEXTS.COM Home">
+      <span class="logo-text">posytexts<span class="logo-domain">.com</span></span>
+      <span class="logo-flower">✿</span>
+    </a>
+
+    <div class="header-actions">
+      <button class="scrapbook-nav-btn" id="openGardenBtn" title="Browse all 26 flowers A–Z">
+        📖 <span class="btn-text">a–z garden</span>
+      </button>
+
+      <button class="scrapbook-nav-btn" id="soundToggleBtn" title="Toggle audio chimes">
+        🔊 <span class="btn-text">sound on</span>
+      </button>
+
+      <button class="scrapbook-nav-btn" id="openCloudSettingsBtn" title="Supabase Cloud Database Sync">
+        ☁️ <span class="btn-text">cloud sync</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       CREATOR VIEW (NAME -> BOUQUET -> LETTER -> ENVELOPE -> SEND)
+       ========================================================================= -->
+  <main id="creatorView" class="main-content-flow">
+
+    <!-- STEP 1: HOMEPAGE & REAL-TIME NAME BLOOM HERO -->
+    <section id="heroSection" class="hero-section">
+      <div class="vintage-stamp-badge">
+        <span>✉</span>
+        <span>1980s Floriography Mail Service</span>
+        <span>✦</span>
+      </div>
+
+      <h1 class="hero-headline">
+        Spell their name.<br />
+        <span class="bloom-highlight">Let it bloom.</span>
+      </h1>
+
+      <p class="hero-subtext">
+        Turn someone's name into a tiny bouquet, write them a little letter, and send it straight to their inbox.
+      </p>
+
+      <!-- Real-Time Name Input Box -->
+      <div class="name-bloom-card">
+        <div class="card-washi-tape" aria-hidden="true"></div>
+        <label for="nameInput" class="input-prompt-label">
+          whose name are we blooming? ✿
+        </label>
+        <div class="name-input-group">
+          <input 
+            type="text" 
+            id="nameInput" 
+            class="vintage-name-input" 
+            placeholder="e.g. SHRUTI, EMMA, LUCAS..." 
+            autocomplete="off" 
+            maxlength="16" 
+            aria-label="Whose name are we blooming?"
+          />
+          <button id="bloomBtn" class="grow-posy-btn">
+            grow their posy ✿
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Bouquet Display Canvas -->
+      <div id="bouquetArea" class="bouquet-display-section">
+        <div id="bouquetDisplayArea" class="bouquet-container">
+          <!-- Filled dynamically by bouquet-builder.js -->
+        </div>
+
+        <!-- Action Bar: "A little posy for [NAME]" + "write them something →" -->
+        <div class="bouquet-action-bar">
+          <h2 id="bouquetActionTitle" class="posy-title-display">
+            your posy will bloom here...
+          </h2>
+          <button id="proceedToLetterBtn" class="write-letter-cta-btn disabled" disabled>
+            write them something →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 2: VINTAGE STATIONERY LETTER EDITOR -->
+    <section id="letterSection" class="letter-section-container hidden">
+      <!-- Stationery Customization Control Panel -->
+      <div class="stationery-control-panel">
+        <div class="stationery-option-group">
+          <span class="control-group-title">📜 stationery paper:</span>
+          <div class="stationery-pill-options">
+            <button class="stationery-paper-option active" data-paper="vintage-cream">Vintage Cream</button>
+            <button class="stationery-paper-option" data-paper="blush-rosewater">Blush Rosewater</button>
+            <button class="stationery-paper-option" data-paper="mint-grid">Mint Grid</button>
+            <button class="stationery-paper-option" data-paper="lavender-linen">Lavender Linen</button>
+            <button class="stationery-paper-option" data-paper="airmail-avion">Air Mail Par Avion</button>
+          </div>
+        </div>
+
+        <div class="stationery-option-group">
+          <span class="control-group-title">✒️ pen & typewriter:</span>
+          <div class="stationery-pill-options">
+            <button class="stationery-font-option active" data-font="font-handwriting">Handwritten Pen</button>
+            <button class="stationery-font-option" data-font="font-playful">Playful Script</button>
+            <button class="stationery-font-option" data-font="font-serif">Victorian Serif</button>
+            <button class="stationery-font-option" data-font="font-typewriter">1980s Typewriter</button>
+          </div>
+        </div>
+
+        <div class="stationery-option-group">
+          <span class="control-group-title">🌸 stamps & stickers:</span>
+          <div class="scrapbook-sticker-drawer" id="stickerDrawerItems">
+            <!-- Stickers rendered dynamically -->
+          </div>
+          <button id="clearStickersBtn" class="clear-stickers-btn">peel all stickers off</button>
+        </div>
+      </div>
+
+      <!-- The Letter Paper Sheet -->
+      <div class="stationery-paper-wrapper">
+        <div class="paper-washi-top-left" aria-hidden="true"></div>
+        <div class="paper-washi-top-right" aria-hidden="true"></div>
+
+        <div class="paper-postal-stamp" aria-hidden="true">
+          <span class="stamp-inner-art">🌸</span>
+          <span class="stamp-denom">15p</span>
+          <div class="stamp-postmark-ring">LONDON 1984</div>
+        </div>
+
+        <div class="stationery-paper-sheet vintage-cream font-handwriting" id="stationeryPaperSheet">
+          <!-- Placed stickers / stamps layer -->
+          <div class="placed-stickers-layer" id="letterStickerCanvas"></div>
+
+          <div class="stationery-header-fields">
+            <div class="letter-to-field">
+              To: <span id="letterRecipientName">Someone</span>
+            </div>
+            <div class="letter-email-field">
+              <span class="envelope-inline-icon">✉</span>
+              <input 
+                type="email" 
+                id="letterRecipientEmail" 
+                class="stationery-email-input" 
+                placeholder="their email address (e.g. friend@gmail.com)" 
+                aria-label="Recipient's Email Address"
+              />
+            </div>
+            <div class="letter-dear-salutation">
+              Dear <span id="letterDearName">Someone</span>,
+            </div>
+          </div>
+
+          <textarea 
+            id="letterTextarea" 
+            class="letter-main-textarea" 
+            placeholder="I had a little dream about you today... so I made you this bouquet. Each flower blooms from the letters of your name." 
+            aria-label="Write your personal letter"
+          ></textarea>
+
+          <div class="letter-sign-off-fields">
+            <span class="signoff-label">From:</span>
+            <input 
+              type="text" 
+              id="letterSenderInput" 
+              class="signoff-sender-input" 
+              placeholder="your name or a secret admirer" 
+              aria-label="Your name"
+            />
+            <input 
+              type="email" 
+              id="letterSenderEmail" 
+              class="signoff-email-input" 
+              placeholder="your email (optional)" 
+              aria-label="Your email"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Letter Actions: Back or Seal It -->
+      <div class="letter-action-buttons">
+        <button id="backToBouquetBtn" class="back-to-posy-btn">
+          ← back to their posy
+        </button>
+        <button id="sealLetterBtn" class="seal-letter-btn">
+          seal it? 💌
+        </button>
+      </div>
+    </section>
+
+    <!-- STEP 3: 3D ENVELOPE SEALING ANIMATION STAGE -->
+    <section id="sealingSection" class="sealing-animation-stage hidden">
+      <!-- Folding Proxy Letter -->
+      <div id="foldingLetterProxy" class="folding-letter-proxy">
+        <div id="foldingLetterContent" class="folding-letter-inner"></div>
+      </div>
+
+      <!-- Vintage Envelope 3D Container -->
+      <div class="vintage-envelope-box" id="sealingEnvelope">
+        <div class="envelope-floral-liner"></div>
+        <div class="envelope-flap-top" id="sealingFlap"></div>
+        <div class="envelope-pocket-front">
+          <div class="pocket-left-fold"></div>
+          <div class="pocket-right-fold"></div>
+          <div class="pocket-bottom-fold"></div>
+        </div>
+        <div class="wax-seal-emblem" id="sealingWaxSeal" title="Sealed with love">
+          ✿
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       RECIPIENT VIEW ("Someone left you something.")
+       ========================================================================= -->
+  <main id="recipientView" class="recipient-view-wrapper hidden">
+    <!-- Recipient Loading Shimmer -->
+    <div id="recipientLoadingBox" class="posy-loading-state hidden">
+      <div class="posy-loading-spinner">🌸</div>
+      <h2 class="posy-state-title">Retrieving your blooming posy...</h2>
+      <p class="posy-state-msg">Our post office is fetching your handwritten letter and botanical bouquet from the cloud.</p>
+    </div>
+
+    <!-- Posy Not Found State -->
+    <div id="recipientNotFoundBox" class="posy-not-found-state hidden">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">🍃</div>
+      <h2 class="posy-state-title">Posy Not Found</h2>
+      <p class="posy-state-msg">We checked every flower bed, but this posy delivery link seems to be missing or was moved.</p>
+      <button id="notFoundCreateBtn" class="grow-posy-btn">
+        Create a posy for someone ✿
+      </button>
+    </div>
+
+    <div id="recipientEnvelopeContainer">
+      <div class="recipient-banner">
+        <h1 class="recipient-headline">Someone left you something.</h1>
+        <p class="recipient-subheading">A special delivery for <span id="recipientHeroName">You</span></p>
+        <div class="unseal-prompt-pill" id="unsealPromptText">
+          tap the envelope to unseal 💌
+        </div>
+      </div>
+
+    <!-- Sealed Envelope Waiting for Recipient Tap -->
+    <div class="recipient-interactive-envelope" id="recipientEnvelope" title="Click to unseal your bouquet & letter">
+      <div class="envelope-floral-liner"></div>
+      <div class="envelope-flap-top" id="recipientFlap"></div>
+      <div class="recipient-address-label">
+        <div class="envelope-recipient-to">Special Delivery for:</div>
+        <div class="envelope-recipient-name" id="recipientEnvelopeName">YOU</div>
+      </div>
+      <div class="envelope-pocket-front">
+        <div class="pocket-left-fold"></div>
+        <div class="pocket-right-fold"></div>
+        <div class="pocket-bottom-fold"></div>
+      </div>
+      <div class="wax-seal-emblem stamped" id="recipientWaxSeal">
+        ✿
+      </div>
+    </div>
+  </div>
+
+    <!-- Unfolded Content: Bouquet Emerges & Letter Appears -->
+    <div class="recipient-unfolded-experience">
+      <!-- Blooming Bouquet -->
+      <div class="recipient-emerging-bouquet" id="recipientEmergingBouquet">
+        <div id="recipientBouquetArea" class="bouquet-container"></div>
+      </div>
+
+      <!-- Unfolded Letter -->
+      <div class="recipient-emerging-letter" id="recipientEmergingLetter">
+        <div class="stationery-paper-wrapper">
+          <div class="paper-washi-top-left" aria-hidden="true"></div>
+          <div class="paper-washi-top-right" aria-hidden="true"></div>
+          <div class="stationery-paper-sheet vintage-cream font-handwriting" id="recipientLetterSheet">
+            <div class="placed-stickers-layer" id="recLetterStickerCanvas"></div>
+            <div class="stationery-header-fields">
+              <div class="letter-to-field">To: <span id="recLetterTo">You</span></div>
+              <div class="letter-dear-salutation">Dear <span id="recLetterDear">You</span>,</div>
+            </div>
+            <div class="recipient-letter-body" id="recLetterBody"></div>
+            <div class="letter-sign-off-fields" style="margin-top: 2rem;">
+              <span class="signoff-label">From:</span>
+              <strong id="recLetterFrom" style="font-size: 1.4rem;">Someone</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recipient CTAs -->
+      <div class="recipient-footer-actions">
+        <button id="printKeepsakeBtn" class="scrapbook-nav-btn" style="font-size: 1.25rem; padding: 0.8rem 1.6rem;">
+          🖨️ save keepsake / print posy
+        </button>
+        <button id="bloomOwnPosyBtn" class="grow-posy-btn">
+          bloom a posy for someone else ✿
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- =========================================================================
+       MODAL: ALPHABET GARDEN (A–Z ENCYCLOPEDIA)
+       ========================================================================= -->
+  <div id="alphabetGardenModal" class="posy-modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="gardenModalTitle">
+    <div class="posy-modal-window">
+      <div class="modal-header-scrapbook">
+        <h2 id="gardenModalTitle" class="modal-title">✿ The Alphabet Garden (A–Z)</h2>
+        <button id="closeGardenBtn" class="modal-close-btn" aria-label="Close garden">✕</button>
+      </div>
+
+      <div class="garden-controls">
+        <div class="garden-search-box">
+          <input 
+            type="text" 
+            id="gardenSearchInput" 
+            class="garden-search-input" 
+            placeholder="Search by letter, flower, or meaning (e.g. Love, Hope, Rose)..." 
+            aria-label="Search alphabet garden"
+          />
+        </div>
+
+        <div class="garden-tags-filter">
+          <button class="garden-tag-pill active" data-tag="all">All Flowers (26)</button>
+          <button class="garden-tag-pill" data-tag="Love">Love & Affection</button>
+          <button class="garden-tag-pill" data-tag="Joy">Joy & Sunshine</button>
+          <button class="garden-tag-pill" data-tag="Courage">Courage & Rare</button>
+          <button class="garden-tag-pill" data-tag="Calm">Calm & Healing</button>
+        </div>
+      </div>
+
+      <div class="garden-cards-scroll-area" id="gardenGrid">
+        <!-- Filled dynamically by alphabet-garden.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: SHARE & SEND ENVELOPE
+       ========================================================================= -->
+  <div id="shareModal" class="posy-modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="shareModalTitle">
+    <div class="posy-modal-window" style="max-width: 580px;">
+      <div class="modal-header-scrapbook">
+        <h2 id="shareModalTitle" class="modal-title">💌 Envelope Sealed!</h2>
+        <button id="closeShareModalBtn" class="modal-close-btn" aria-label="Close share options">✕</button>
+      </div>
+
+      <div class="share-modal-body">
+        <h3 class="share-modal-title">Ready for delivery.</h3>
+        <p class="share-modal-subtext">Send this bouquet and letter straight to <span id="shareRecipientNameLabel">their</span> inbox or share via secret link.</p>
+
+        <!-- Cloud Storage Badge -->
+        <div id="shareCloudBadge" class="share-cloud-badge permanent">
+          ☁️ <strong>Permanent Link Ready</strong> — Stored securely, never expires
+        </div>
+
+        <!-- Email Send Block -->
+        <div class="share-section-block">
+          <label for="recipientEmailInput" class="share-label">Recipient's Email Address:</label>
+          <div class="share-input-row">
+            <input 
+              type="email" 
+              id="recipientEmailInput" 
+              class="share-field-input" 
+              placeholder="e.g. friend@gmail.com" 
+              aria-label="Recipient's Email"
+            />
+            <button id="sendDirectEmailBtn" class="share-action-btn">
+              Send Posy 💌
+            </button>
+          </div>
+
+          <!-- Email Client Shortcut Buttons -->
+          <div class="email-client-options-container">
+            <span class="email-client-hint">or open directly in your mail app:</span>
+            <div class="email-client-options-grid">
+              <button id="openGmailBtn" class="email-client-btn gmail" title="Open and compose in Gmail">
+                <span>✉️</span> Gmail
+              </button>
+              <button id="openOutlookBtn" class="email-client-btn outlook" title="Open and compose in Outlook">
+                <span>📨</span> Outlook
+              </button>
+              <button id="openDefaultMailBtn" class="email-client-btn mailto" title="Open default mail app">
+                <span>📬</span> Mail App
+              </button>
+              <button id="openWhatsAppBtn" class="email-client-btn whatsapp" title="Send via WhatsApp">
+                <span>💬</span> WhatsApp
+              </button>
+            </div>
+          </div>
+
+          <!-- Live Delivery Status Banner -->
+          <div id="deliveryStatusBox" class="delivery-status-banner hidden">
+            <span class="delivery-status-icon">🕊️</span>
+            <div class="delivery-status-text">
+              <strong>Posy Dispatched!</strong>
+              <p id="deliveryStatusMsg">Sent to your recipient. They can unseal their bouquet anytime!</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Secret Shareable Bloom Link -->
+        <div class="share-section-block">
+          <label for="shareLinkInput" class="share-label">Secret Bloom Link (Anyone with link can unseal):</label>
+          <div class="share-input-row">
+            <input 
+              type="text" 
+              id="shareLinkInput" 
+              class="share-field-input" 
+              readonly 
+              aria-label="Secret Bloom Link"
+            />
+            <button id="copyShareLinkBtn" class="share-action-btn secondary">
+              Copy Link 🔗
+            </button>
+          </div>
+        </div>
+
+        <!-- Extra Quick Share Actions -->
+        <div class="share-social-grid">
+          <button id="nativeShareBtn" class="share-action-btn secondary" style="width: 100%;">
+            📱 Share via Device / AirDrop
+          </button>
+          <button id="previewRecipientBtn" class="share-action-btn secondary" style="width: 100%;">
+            👀 Preview Delivery
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: SUPABASE CLOUD DATABASE SETTINGS
+       ========================================================================= -->
+  <div id="cloudModal" class="posy-modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="cloudModalTitle">
+    <div class="posy-modal-window" style="max-width: 540px;">
+      <div class="modal-header-scrapbook">
+        <h2 id="cloudModalTitle" class="modal-title">☁️ Supabase Cloud DB</h2>
+        <button id="closeCloudModalBtn" class="modal-close-btn" aria-label="Close modal">✕</button>
+      </div>
+
+      <div class="share-modal-body">
+        <h3 class="share-modal-title">Persistent Cloud Database</h3>
+        <p class="share-modal-subtext">
+          Connect your Supabase project to store posies forever in PostgreSQL with clean short links (<code>posytexts.com/?id=...</code>) and open receipts.
+        </p>
+
+        <div class="share-section-block">
+          <label for="supabaseUrlInput" class="share-label">Supabase Project URL:</label>
+          <input 
+            type="url" 
+            id="supabaseUrlInput" 
+            class="share-field-input" 
+            placeholder="https://your-project.supabase.co" 
+          />
+        </div>
+
+        <div class="share-section-block">
+          <label for="supabaseKeyInput" class="share-label">Supabase Anon Public Key:</label>
+          <input 
+            type="password" 
+            id="supabaseKeyInput" 
+            class="share-field-input" 
+            placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." 
+          />
+        </div>
+
+        <div class="share-input-row" style="margin-top: 1.25rem;">
+          <button id="saveCloudConfigBtn" class="share-action-btn">
+            Connect Supabase ☁️
+          </button>
+          <button id="clearCloudConfigBtn" class="share-action-btn secondary">
+            Reset
+          </button>
+        </div>
+
+        <div id="cloudModalStatusBanner" class="delivery-status-banner hidden" style="margin-top: 1rem;">
+          <span class="delivery-status-icon">☁️</span>
+          <div class="delivery-status-text">
+            <strong id="cloudModalStatusTitle">Connected!</strong>
+            <p id="cloudModalStatusMsg">Supabase database is active.</p>
+          </div>
+        </div>
+
+        <div style="margin-top: 1.25rem; font-size: 0.85rem; color: #736b63; background: #faf6f0; border: 1px dashed #d1c7bd; border-radius: 8px; padding: 0.85rem; line-height: 1.45;">
+          <strong>💌 How to setup Supabase in 2 minutes:</strong><br/>
+          1. Create a free project at <a href="https://supabase.com" target="_blank" style="color: #2D5A43; font-weight: 600;">supabase.com</a><br/>
+          2. Open SQL Editor and run <code>schema.sql</code> (included in this repository)<br/>
+          3. Copy Project URL and Anon Key into the fields above.<br/>
+          <em>Even without Supabase, POSYTEXTS.COM automatically encodes letters into permanent self-contained links that never expire!</em>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-logo">posytexts.com ✿</div>
+      <p class="creator-attribution">
+        A handmade digital scrapbooking project created with love by 
+        <strong>Shruti Arya</strong> · 
+        <a href="mailto:miss.shrutiarya@gmail.com">miss.shrutiarya@gmail.com</a>
+      </p>
+      <p class="footer-craft-note">
+        Inspired by 1980s English stationery, Victorian floriography, pressed wildflowers, and messy journaling.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/flowers-data.js"></script>
+  <script src="js/flower-svgs.js"></script>
+  <script src="js/audio-synth.js"></script>
+  <script src="js/bouquet-builder.js"></script>
+  <script src="js/letter-editor.js"></script>
+  <script src="js/envelope-anim.js"></script>
+  <script src="js/alphabet-garden.js"></script>
+  <script src="js/share-engine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
