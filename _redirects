@@ -1,4 +1,2 @@
-/css/*  /:splat  200
-/js/*   /:splat  200
 /open/*  /?id=:splat  302
 /p/*     /?id=:splat  302

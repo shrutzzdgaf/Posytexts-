@@ -38,11 +38,30 @@
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
 
-  <!-- Stylesheets (dual-path: supports both css/ subfolder and root files) -->
-  <link rel="stylesheet" href="css/style.css" onerror="this.onerror=null;this.href='style.css';" />
-  <link rel="stylesheet" href="css/stationery.css" onerror="this.onerror=null;this.href='stationery.css';" />
-  <link rel="stylesheet" href="css/bouquet.css" onerror="this.onerror=null;this.href='bouquet.css';" />
-  <link rel="stylesheet" href="css/envelope.css" onerror="this.onerror=null;this.href='envelope.css';" />
+  <!-- Critical Inline CSS (guarantees styling instantly before network fetches) -->
+  <style>
+    :root {
+      --bg-cream: #FAF6EE;
+      --paper-cream: #FCF9F2;
+      --ink-dark: #231F1E;
+    }
+    body {
+      background-color: #FAF6EE;
+      color: #231F1E;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+    .hidden {
+      display: none !important;
+    }
+  </style>
+
+  <!-- Stylesheets (dual-path: supports both css/ subfolder and root files with cache busting) -->
+  <link rel="stylesheet" href="css/style.css?v=3.2" onerror="this.onerror=null;this.href='style.css?v=3.2';" />
+  <link rel="stylesheet" href="css/stationery.css?v=3.2" onerror="this.onerror=null;this.href='stationery.css?v=3.2';" />
+  <link rel="stylesheet" href="css/bouquet.css?v=3.2" onerror="this.onerror=null;this.href='bouquet.css?v=3.2';" />
+  <link rel="stylesheet" href="css/envelope.css?v=3.2" onerror="this.onerror=null;this.href='envelope.css?v=3.2';" />
 </head>
 <body>
 
@@ -587,11 +606,11 @@
         if (index >= scriptNames.length) return;
         const file = scriptNames[index];
         const s = document.createElement('script');
-        s.src = 'js/' + file;
+        s.src = 'js/' + file + '?v=3.2';
         s.onerror = function() {
           // Fallback to root directory if js/ subfolder not found
           const fb = document.createElement('script');
-          fb.src = file;
+          fb.src = file + '?v=3.2';
           fb.onload = function() { loadScriptAt(index + 1); };
           fb.onerror = function() { console.error('Script load error:', file); loadScriptAt(index + 1); };
           document.body.appendChild(fb);

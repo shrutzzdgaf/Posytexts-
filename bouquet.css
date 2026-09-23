@@ -1,0 +1,311 @@
+/* ==========================================================================
+   POSYTEXTS.COM — Organic Bouquet Arrangement & Floral Physics Styles
+   Swaying breeze animations, fan geometry, kraft wrap, and floriography tooltips.
+   ========================================================================== */
+
+.bouquet-stage {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 2rem;
+  overflow: visible;
+}
+
+/* Central Cluster of Stems */
+.bouquet-flowers-cluster {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: -70px;
+  z-index: 10;
+}
+
+/* Individual Flower Wrapper with calculated offsets */
+.bouquet-stem-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform-origin: 50% 100%;
+  transform: 
+    translateX(calc(-50% + var(--stem-x, 0px))) 
+    translateY(var(--stem-y, 0px)) 
+    rotate(var(--stem-rot, 0deg)) 
+    scale(var(--stem-scale, 1));
+  transition: transform 0.4s var(--ease-spring);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Natural Breeze Swaying Animation */
+.bouquet-stem-wrapper.swaying-stem {
+  animation: botanicalSway var(--sway-dur, 3.4s) ease-in-out infinite alternate;
+  animation-delay: var(--sway-delay, 0s);
+}
+
+@keyframes botanicalSway {
+  0% {
+    transform: 
+      translateX(calc(-50% + var(--stem-x, 0px))) 
+      translateY(var(--stem-y, 0px)) 
+      rotate(calc(var(--stem-rot, 0deg) - 2.5deg)) 
+      scale(var(--stem-scale, 1));
+  }
+  100% {
+    transform: 
+      translateX(calc(-50% + var(--stem-x, 0px))) 
+      translateY(var(--stem-y, 0px)) 
+      rotate(calc(var(--stem-rot, 0deg) + 2.5deg)) 
+      scale(var(--stem-scale, 1));
+  }
+}
+
+.bouquet-stem-wrapper:hover {
+  animation-play-state: paused;
+  z-index: 50 !important;
+  transform: 
+    translateX(calc(-50% + var(--stem-x, 0px))) 
+    translateY(calc(var(--stem-y, 0px) - 14px)) 
+    rotate(var(--stem-rot, 0deg)) 
+    scale(calc(var(--stem-scale, 1) * 1.12)) !important;
+}
+
+.stem-interactive-target {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Letter Pip Indicator on Stem */
+.flower-letter-pip {
+  position: absolute;
+  bottom: 85px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #FFFDF9;
+  border: 1.5px solid var(--ink-walnut);
+  color: var(--ink-walnut);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 0.75rem;
+  font-weight: 700;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+  pointer-events: none;
+  opacity: 0.9;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.bouquet-stem-wrapper:hover .flower-letter-pip {
+  background: var(--blush-pink);
+  color: #FFFFFF;
+  border-color: var(--ink-walnut);
+  transform: translateX(-50%) scale(1.25);
+  opacity: 1;
+}
+
+/* Botanical SVG Bloom Animation */
+.botanical-flower-svg {
+  overflow: visible;
+  filter: drop-shadow(0 4px 10px rgba(60, 40, 30, 0.12));
+}
+
+.botanical-flower-svg .flower-head {
+  transform-origin: 0 0;
+  animation: blossomOpening 0.65s var(--ease-spring) both;
+  animation-delay: var(--bloom-delay, 0s);
+}
+
+@keyframes blossomOpening {
+  0% {
+    transform: scale(0.2) rotate(-15deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.1) rotate(4deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Bouquet Wrap Base & Kraft Paper Sleeve */
+.bouquet-wrap-base {
+  position: relative;
+  z-index: 25;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bouquet-kraft-sleeve {
+  width: 170px;
+  height: 130px;
+  position: relative;
+  filter: drop-shadow(0 8px 18px rgba(78, 52, 46, 0.18));
+}
+
+.kraft-paper-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Luggage Name Tag tied to Bouquet */
+.posy-luggage-tag {
+  position: absolute;
+  top: 60px;
+  left: 65%;
+  transform: rotate(8deg);
+  background: #FFFDF8;
+  border: 1.5px solid #8C6239;
+  border-radius: 6px;
+  padding: 0.6rem 1rem 0.75rem;
+  box-shadow: 2px 4px 10px rgba(78, 52, 46, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 30;
+  min-width: 150px;
+  transition: transform 0.2s var(--ease-spring);
+}
+
+.posy-luggage-tag:hover {
+  transform: rotate(4deg) scale(1.06);
+}
+
+.tag-eyelet {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #E6CCB2;
+  border: 1.5px solid #7F5539;
+}
+
+.tag-twine {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  width: 2px;
+  height: 18px;
+  background: #7F5539;
+}
+
+.tag-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.15rem;
+}
+
+.tag-stamp {
+  font-family: var(--font-casual);
+  font-size: 0.65rem;
+  color: #B08968;
+  letter-spacing: 0.1em;
+}
+
+.tag-label {
+  font-family: var(--font-casual);
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.tag-name {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  color: var(--ink-walnut);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Floriography Hover Tooltip Tag */
+.floriography-hover-tag {
+  position: fixed;
+  z-index: 999;
+  background: #FFFDF9;
+  border: 2px solid var(--ink-walnut);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  box-shadow: 4px 6px 0px var(--ink-walnut);
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  max-width: 320px;
+}
+
+.floriography-hover-tag.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tooltip-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  color: #FFFFFF;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1.5px solid var(--ink-walnut);
+}
+
+.tooltip-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.tooltip-flower-name {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink-walnut);
+}
+
+.tooltip-latin {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--ink-faint);
+}
+
+.tooltip-meaning {
+  font-family: var(--font-hand);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--blush-pink);
+  line-height: 1.2;
+}
+
+.tooltip-palette {
+  font-family: var(--font-casual);
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+}
