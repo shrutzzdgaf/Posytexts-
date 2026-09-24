@@ -12,13 +12,14 @@ class PosyTextsApp {
   }
 
   async init() {
-    this.setupSoundToggle();
-    this.setupCloudModal();
-    alphabetGarden.init();
-    letterEditor.initEditor();
-    this.setupCreatorEventListeners();
-    this.setupShareModal();
-    await this.checkRoute();
+    try { this.setupSoundToggle(); } catch (e) { console.warn('Sound toggle init:', e); }
+    try { this.setupCloudModal(); } catch (e) { console.warn('Cloud modal init:', e); }
+    try { alphabetGarden.init(); } catch (e) { console.warn('Alphabet garden init:', e); }
+    try { letterEditor.initEditor(); } catch (e) { console.warn('Letter editor init:', e); }
+    try { this.setupCreatorEventListeners(); } catch (e) { console.warn('Creator listeners init:', e); }
+    try { this.setupShareModal(); } catch (e) { console.warn('Share modal init:', e); }
+    try { await this.checkRoute(); } catch (e) { console.warn('Check route init:', e); }
+    console.log('[PosyTexts] App initialized and ready to bloom! 🌸');
   }
 
   /**
@@ -698,6 +699,13 @@ class PosyTextsApp {
 }
 
 const app = new PosyTextsApp();
-document.addEventListener('DOMContentLoaded', () => {
+window.posyApp = app;
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    app.init();
+  });
+} else {
+  // DOM is already ready (e.g. dynamic injection or deferred script)
   app.init();
-});
+}

@@ -58,10 +58,10 @@
   </style>
 
   <!-- Stylesheets (dual-path: supports both css/ subfolder and root files with cache busting) -->
-  <link rel="stylesheet" href="css/style.css?v=3.2" onerror="this.onerror=null;this.href='style.css?v=3.2';" />
-  <link rel="stylesheet" href="css/stationery.css?v=3.2" onerror="this.onerror=null;this.href='stationery.css?v=3.2';" />
-  <link rel="stylesheet" href="css/bouquet.css?v=3.2" onerror="this.onerror=null;this.href='bouquet.css?v=3.2';" />
-  <link rel="stylesheet" href="css/envelope.css?v=3.2" onerror="this.onerror=null;this.href='envelope.css?v=3.2';" />
+  <link rel="stylesheet" href="css/style.css?v=3.5" onerror="this.onerror=null;this.href='style.css?v=3.5';" />
+  <link rel="stylesheet" href="css/stationery.css?v=3.5" onerror="this.onerror=null;this.href='stationery.css?v=3.5';" />
+  <link rel="stylesheet" href="css/bouquet.css?v=3.5" onerror="this.onerror=null;this.href='bouquet.css?v=3.5';" />
+  <link rel="stylesheet" href="css/envelope.css?v=3.5" onerror="this.onerror=null;this.href='envelope.css?v=3.5';" />
 </head>
 <body>
 
@@ -585,41 +585,17 @@
     </div>
   </footer>
 
-  <!-- Scripts -->
-  <!-- Scripts: Supabase CDN + dual-path sequential script loader -->
+  <!-- Scripts: Direct parallel fetch and synchronous execution -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-    (function() {
-      const scriptNames = [
-        'supabase-client.js',
-        'flowers-data.js',
-        'flower-svgs.js',
-        'audio-synth.js',
-        'bouquet-builder.js',
-        'letter-editor.js',
-        'envelope-anim.js',
-        'alphabet-garden.js',
-        'share-engine.js',
-        'app.js'
-      ];
-      function loadScriptAt(index) {
-        if (index >= scriptNames.length) return;
-        const file = scriptNames[index];
-        const s = document.createElement('script');
-        s.src = 'js/' + file + '?v=3.2';
-        s.onerror = function() {
-          // Fallback to root directory if js/ subfolder not found
-          const fb = document.createElement('script');
-          fb.src = file + '?v=3.2';
-          fb.onload = function() { loadScriptAt(index + 1); };
-          fb.onerror = function() { console.error('Script load error:', file); loadScriptAt(index + 1); };
-          document.body.appendChild(fb);
-        };
-        s.onload = function() { loadScriptAt(index + 1); };
-        document.body.appendChild(s);
-      }
-      loadScriptAt(0);
-    })();
-  </script>
+  <script src="js/flowers-data.js?v=3.5"></script>
+  <script src="js/flower-svgs.js?v=3.5"></script>
+  <script src="js/audio-synth.js?v=3.5"></script>
+  <script src="js/bouquet-builder.js?v=3.5"></script>
+  <script src="js/letter-editor.js?v=3.5"></script>
+  <script src="js/envelope-anim.js?v=3.5"></script>
+  <script src="js/alphabet-garden.js?v=3.5"></script>
+  <script src="js/share-engine.js?v=3.5"></script>
+  <script src="js/supabase-client.js?v=3.5"></script>
+  <script src="js/app.js?v=3.5"></script>
 </body>
 </html>
