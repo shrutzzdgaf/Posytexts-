@@ -86,38 +86,48 @@ class EnvelopeAnimator {
     const envelope = document.getElementById('recipientEnvelope');
     const waxSeal = document.getElementById('recipientWaxSeal');
     const flap = document.getElementById('recipientFlap');
-    const peekingLetter = document.getElementById('recipientPeekingLetter');
     const emergingBouquet = document.getElementById('recipientEmergingBouquet');
     const emergingLetter = document.getElementById('recipientEmergingLetter');
+    const letterTag = document.getElementById('letterFromEnvelopeTag');
     const prompt = document.getElementById('unsealPromptText');
 
     try { audioSynth.playSparkleUnseal(); } catch (e) {}
     try { this.fireConfetti(); } catch (e) {}
 
+    // Step 2: Envelope opens with the flowers
     if (waxSeal) {
       waxSeal.classList.add('wax-broken');
     }
     if (flap) {
+      flap.classList.remove('flap-closed');
       flap.classList.add('flap-opened');
-    }
-    if (peekingLetter) {
-      peekingLetter.classList.add('letter-rising-out');
     }
     if (emergingBouquet) {
       emergingBouquet.classList.add('bouquet-emerged');
     }
+
+    // SIMULTANEOUSLY: Envelope disappears and the flowers stay!
+    if (envelope) {
+      envelope.classList.add('envelope-disappeared');
+    }
+
+    // Simultaneously: Unfold the letter below the flowers
     if (emergingLetter) {
       emergingLetter.classList.add('letter-unfolded');
     }
-    if (prompt) {
-      prompt.innerHTML = '✦ unsealed with love ✦ (tap envelope to flutter petals 🌸)';
+    if (letterTag) {
+      letterTag.classList.add('tag-visible');
     }
 
-    // Smoothly scroll down so the recipient immediately sees their handwritten letter
+    if (prompt) {
+      prompt.innerHTML = '✦ unsealed with love ✦';
+    }
+
+    // Smoothly scroll down so the recipient immediately sees their standing flowers and letter
     if (emergingLetter) {
       setTimeout(() => {
         emergingLetter.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 400);
+      }, 500);
     }
 
     if (typeof onComplete === 'function') onComplete();

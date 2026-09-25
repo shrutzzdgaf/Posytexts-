@@ -635,26 +635,45 @@ class PosyTextsApp {
     const envelopeName = document.getElementById('recipientEnvelopeName');
     const bouquetContainer = document.getElementById('recipientBouquetArea');
     const letterSheet = document.getElementById('recipientLetterSheet');
-    const letterFromSpan = document.getElementById('recipientFromLine');
     const bloomOwnBtn = document.getElementById('bloomOwnPosyBtn');
     const unsealEnvelopeBtn = document.getElementById('recipientEnvelope');
     const unfoldedExp = document.querySelector('.recipient-unfolded-experience');
     const flap = document.getElementById('recipientFlap');
+    const waxSeal = document.getElementById('recipientWaxSeal');
     const emergingBouquet = document.getElementById('recipientEmergingBouquet');
     const emergingLetter = document.getElementById('recipientEmergingLetter');
-    const peekingLetter = document.getElementById('recipientPeekingLetter');
+    const letterTag = document.getElementById('letterFromEnvelopeTag');
     const promptText = document.getElementById('unsealPromptText');
 
     if (creatorView) creatorView.classList.add('hidden');
     if (recipientView) recipientView.classList.remove('hidden');
     if (unfoldedExp) unfoldedExp.classList.remove('hidden');
 
-    // Make sure envelope is open with bouquet blooming out and letter unfolded
-    if (flap) flap.classList.add('flap-opened');
-    if (emergingBouquet) emergingBouquet.classList.add('bouquet-emerged');
-    if (emergingLetter) emergingLetter.classList.add('letter-unfolded');
-    if (peekingLetter) peekingLetter.classList.add('letter-rising-out');
-    if (promptText) promptText.innerHTML = '✦ unsealed with love ✦ (tap envelope to flutter petals 🌸)';
+    // Step 1: Envelope starts closed with recipient name at right bottom
+    if (unsealEnvelopeBtn) {
+      unsealEnvelopeBtn.classList.remove('envelope-disappeared');
+    }
+    if (flap) {
+      flap.classList.remove('flap-opened');
+      flap.classList.add('flap-closed');
+    }
+    if (waxSeal) {
+      waxSeal.classList.remove('wax-broken');
+      waxSeal.classList.add('stamped');
+    }
+    if (emergingBouquet) {
+      emergingBouquet.classList.remove('bouquet-emerged');
+    }
+    if (emergingLetter) {
+      emergingLetter.classList.remove('letter-unfolded');
+    }
+    if (letterTag) {
+      letterTag.classList.remove('tag-visible');
+    }
+    if (promptText) {
+      promptText.innerHTML = 'tap the envelope to open 💌';
+      promptText.style.cursor = 'pointer';
+    }
 
     const defaultPoeticMsg = "I had a little dream about you today... so I made you this bouquet. Each flower blooms from the letters of your name.";
     const displayRecipient = (data.recipientName && data.recipientName.trim()) ? data.recipientName.trim() : 'Friend';
@@ -664,7 +683,7 @@ class PosyTextsApp {
     if (recipientNameSpan) recipientNameSpan.textContent = displayRecipient;
     if (envelopeName) envelopeName.textContent = displayRecipient;
 
-    // Prepare bouquet inside the envelope
+    // Prepare bouquet inside container
     bouquetBuilder.renderBouquet(displayRecipient, bouquetContainer);
 
     // Prepare handwritten letter sheet
@@ -704,17 +723,16 @@ class PosyTextsApp {
       }
     }
 
-    // Interactive celebration when recipient taps envelope or prompt
+    // Step 2: Clicking the envelope triggers open + simultaneous envelope disappear + flowers stay
     if (unsealEnvelopeBtn) {
-      unsealEnvelopeBtn.addEventListener('click', () => {
+      unsealEnvelopeBtn.onclick = () => {
         envelopeAnimator.startUnsealingSequence();
-      });
+      };
 
       if (promptText) {
-        promptText.style.cursor = 'pointer';
-        promptText.addEventListener('click', () => {
+        promptText.onclick = () => {
           envelopeAnimator.startUnsealingSequence();
-        });
+        };
       }
     }
 

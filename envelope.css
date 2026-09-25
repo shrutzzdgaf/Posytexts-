@@ -173,45 +173,50 @@
   position: relative;
   width: 480px;
   max-width: 92vw;
-  height: 290px;
+  height: 300px;
   background: #EADBCC;
   border-radius: 12px;
   box-shadow: 0 18px 40px -10px rgba(60, 40, 30, 0.25);
-  margin: 190px auto 2.5rem;
+  margin: 120px auto 2.5rem;
   perspective: 1200px;
   cursor: pointer;
   user-select: none;
   overflow: visible;
-  transition: transform 0.25s var(--ease-spring);
+  transition: transform 0.25s var(--ease-spring), opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.recipient-interactive-envelope:hover {
+.recipient-interactive-envelope:hover:not(.envelope-disappeared) {
   transform: translateY(-4px) scale(1.01);
 }
 
+/* Step 1: Address Label at the RIGHT BOTTOM of the envelope */
 .recipient-address-label {
   position: absolute;
-  top: 42%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  bottom: 22px;
+  right: 28px;
   z-index: 30;
-  text-align: center;
+  text-align: right;
   pointer-events: none;
+  transition: opacity 0.5s ease;
 }
 
 .envelope-recipient-to {
   font-family: var(--font-casual);
-  font-size: 1.1rem;
-  color: var(--ink-soft);
+  font-size: 0.95rem;
+  color: #7A6652;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
 }
 
 .envelope-recipient-name {
   font-family: var(--font-serif);
-  font-size: 1.9rem;
+  font-size: 1.85rem;
   font-weight: 700;
-  color: var(--ink-walnut);
-  letter-spacing: 0.05em;
+  color: #362518;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+  line-height: 1.1;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
 }
 
 /* Recipient Unsealing States */
@@ -232,59 +237,43 @@
   box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.06);
 }
 
-/* Peeking Letter inside Recipient Envelope */
-.envelope-peeking-letter {
-  position: absolute;
-  top: 25px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 280px;
-  height: 120px;
-  background: #FFFDF8;
-  border: 1.5px solid #D5C7B7;
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  z-index: 10;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 10px;
-  font-family: var(--font-handwriting);
-  font-size: 0.95rem;
-  color: var(--ink-soft);
-  transition: transform 0.8s var(--ease-spring), opacity 0.5s ease;
-  pointer-events: none;
+/* Step 2: When envelope opens and simultaneously disappears */
+.recipient-interactive-envelope.envelope-disappeared {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+  cursor: default;
+  transition: background 0.7s ease, box-shadow 0.7s ease;
 }
 
-.envelope-peeking-letter .peeking-paper-tag {
-  background: #FAF6EE;
-  padding: 4px 12px;
-  border-radius: 20px;
-  border: 1px dashed #C8B6A6;
-  font-size: 0.85rem;
-  letter-spacing: 0.03em;
+.recipient-interactive-envelope.envelope-disappeared .envelope-floral-liner,
+.recipient-interactive-envelope.envelope-disappeared .envelope-flap-top,
+.recipient-interactive-envelope.envelope-disappeared .envelope-pocket-front,
+.recipient-interactive-envelope.envelope-disappeared .recipient-address-label,
+.recipient-interactive-envelope.envelope-disappeared .envelope-peeking-letter,
+.recipient-interactive-envelope.envelope-disappeared .wax-seal-emblem {
+  opacity: 0 !important;
+  transform: scale(0.92);
+  pointer-events: none !important;
+  transition: opacity 0.7s ease, transform 0.7s ease;
 }
 
-.envelope-peeking-letter.letter-rising-out {
-  transform: translate(-50%, -65px) scale(1.02);
-}
-
-/* The Posy emerging right from inside the Envelope */
+/* The Flowers: In Step 1 hidden, in Step 2 bloom and STAY! */
 .recipient-emerging-bouquet {
   position: absolute;
   bottom: 25px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(40px) scale(0.85);
   width: 100%;
   max-width: 520px;
-  z-index: 15;
+  z-index: 25;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  pointer-events: auto;
-  opacity: 1 !important;
-  visibility: visible !important;
-  transition: transform 0.8s var(--ease-spring), opacity 0.5s ease;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.9s var(--ease-spring), opacity 0.7s ease;
 }
 
 .recipient-emerging-bouquet .bouquet-stage {
@@ -301,10 +290,12 @@
 
 .recipient-emerging-bouquet.bouquet-emerged {
   opacity: 1 !important;
-  transform: translateX(-50%) translateY(0);
+  visibility: visible !important;
+  transform: translateX(-50%) translateY(0) scale(1) !important;
+  pointer-events: auto !important;
 }
 
-/* Recipient Unfolded Experience & Letter */
+/* Recipient Unfolded Letter */
 .recipient-unfolded-experience {
   display: block !important;
   width: 100%;
@@ -315,6 +306,12 @@
 .letter-from-envelope-tag {
   text-align: center;
   margin: 1.5rem 0 1rem;
+  opacity: 0;
+  transition: opacity 0.6s ease 0.35s;
+}
+
+.letter-from-envelope-tag.tag-visible {
+  opacity: 1;
 }
 
 .envelope-letter-pill {
@@ -333,16 +330,18 @@
 
 .recipient-emerging-letter {
   position: relative;
-  opacity: 1 !important;
-  transform: none !important;
+  opacity: 0;
+  transform: translateY(35px);
   display: block !important;
   margin: 1rem auto 3rem;
-  transition: transform 0.8s var(--ease-spring), opacity 0.5s ease;
+  transition: transform 0.9s var(--ease-spring) 0.35s, opacity 0.8s ease 0.35s;
+  pointer-events: none;
 }
 
 .recipient-emerging-letter.letter-unfolded {
   opacity: 1 !important;
-  transform: none !important;
+  transform: translateY(0) !important;
+  pointer-events: auto !important;
 }
 
 /* Magical Falling Petals / Confetti */
@@ -377,8 +376,8 @@
   .vintage-envelope-box,
   .recipient-interactive-envelope {
     width: 320px;
-    height: 220px;
-    margin-top: 150px;
+    height: 230px;
+    margin: 90px auto 2rem;
   }
   .envelope-flap-top {
     height: 120px;
@@ -386,14 +385,18 @@
   .folding-letter-proxy {
     width: 290px;
   }
+  .recipient-address-label {
+    bottom: 16px;
+    right: 18px;
+  }
   .envelope-recipient-name {
-    font-size: 1.45rem;
+    font-size: 1.35rem;
   }
   .recipient-emerging-bouquet {
     bottom: 15px;
-    transform: translateX(-50%) scale(0.85);
+    transform: translateX(-50%) translateY(30px) scale(0.85);
   }
   .recipient-emerging-bouquet.bouquet-emerged {
-    transform: translateX(-50%) scale(0.85);
+    transform: translateX(-50%) translateY(0) scale(0.85) !important;
   }
 }
