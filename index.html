@@ -58,10 +58,10 @@
   </style>
 
   <!-- Stylesheets (dual-path: supports both css/ subfolder and root files with cache busting) -->
-  <link rel="stylesheet" href="css/style.css?v=3.7" onerror="this.onerror=null;this.href='style.css?v=3.7';" />
-  <link rel="stylesheet" href="css/stationery.css?v=3.7" onerror="this.onerror=null;this.href='stationery.css?v=3.7';" />
-  <link rel="stylesheet" href="css/bouquet.css?v=3.7" onerror="this.onerror=null;this.href='bouquet.css?v=3.7';" />
-  <link rel="stylesheet" href="css/envelope.css?v=3.7" onerror="this.onerror=null;this.href='envelope.css?v=3.7';" />
+  <link rel="stylesheet" href="css/style.css?v=3.8" onerror="this.onerror=null;this.href='style.css?v=3.8';" />
+  <link rel="stylesheet" href="css/stationery.css?v=3.8" onerror="this.onerror=null;this.href='stationery.css?v=3.8';" />
+  <link rel="stylesheet" href="css/bouquet.css?v=3.8" onerror="this.onerror=null;this.href='bouquet.css?v=3.8';" />
+  <link rel="stylesheet" href="css/envelope.css?v=3.8" onerror="this.onerror=null;this.href='envelope.css?v=3.8';" />
 </head>
 <body>
 
@@ -314,44 +314,61 @@
         <h1 class="recipient-headline">Someone left you something.</h1>
         <p class="recipient-subheading">A special delivery for <span id="recipientHeroName">You</span></p>
         <div class="unseal-prompt-pill" id="unsealPromptText">
-          tap the envelope to unseal 💌
+          ✦ unsealed with love ✦ (tap envelope to flutter petals 🌸)
         </div>
       </div>
 
-    <!-- Sealed Envelope Waiting for Recipient Tap -->
-    <div class="recipient-interactive-envelope" id="recipientEnvelope" title="Click to unseal your bouquet & letter">
-      <div class="envelope-floral-liner"></div>
-      <div class="envelope-flap-top" id="recipientFlap"></div>
-      <div class="envelope-peeking-letter" id="recipientPeekingLetter">
-        <span class="peeking-paper-tag">💌 a little posy for you...</span>
-      </div>
-      <div class="recipient-address-label">
-        <div class="envelope-recipient-to">Special Delivery for:</div>
-        <div class="envelope-recipient-name" id="recipientEnvelopeName">YOU</div>
-      </div>
-      <div class="envelope-pocket-front">
-        <div class="pocket-left-fold"></div>
-        <div class="pocket-right-fold"></div>
-        <div class="pocket-bottom-fold"></div>
-      </div>
-      <div class="wax-seal-emblem stamped" id="recipientWaxSeal">
-        ✿
+      <!-- The Keepsake Envelope containing the Blooming Posy Bouquet -->
+      <div class="recipient-interactive-envelope flap-opened" id="recipientEnvelope" title="Tap envelope to flutter flower petals">
+        <div class="envelope-floral-liner"></div>
+        <div class="envelope-flap-top flap-opened" id="recipientFlap"></div>
+
+        <!-- Blooming Botanical Posy (Posy emerges right from inside the envelope) -->
+        <div class="recipient-emerging-bouquet bouquet-emerged" id="recipientEmergingBouquet">
+          <div id="recipientBouquetArea" class="bouquet-container"></div>
+        </div>
+
+        <!-- Peeking Letter inside envelope -->
+        <div class="envelope-peeking-letter letter-rising-out" id="recipientPeekingLetter">
+          <span class="peeking-paper-tag">📜 personal letter below ↓</span>
+        </div>
+
+        <!-- Envelope Front Pocket Folds holding the bouquet inside -->
+        <div class="envelope-pocket-front">
+          <div class="pocket-left-fold"></div>
+          <div class="pocket-right-fold"></div>
+          <div class="pocket-bottom-fold"></div>
+        </div>
+
+        <!-- Address Label on the Front Pocket -->
+        <div class="recipient-address-label">
+          <div class="envelope-recipient-to">Special Delivery for:</div>
+          <div class="envelope-recipient-name" id="recipientEnvelopeName">YOU</div>
+        </div>
+
+        <!-- Wax Seal Emblem -->
+        <div class="wax-seal-emblem stamped" id="recipientWaxSeal" title="Delivered with love">
+          ✿
+        </div>
       </div>
     </div>
-  </div>
 
-    <!-- Unfolded Content: Bouquet Emerges & Letter Appears -->
+    <!-- The Handwritten Letter from the Envelope -->
     <div class="recipient-unfolded-experience">
-      <!-- Blooming Bouquet -->
-      <div class="recipient-emerging-bouquet" id="recipientEmergingBouquet">
-        <div id="recipientBouquetArea" class="bouquet-container"></div>
+      <div class="letter-from-envelope-tag">
+        <span class="envelope-letter-pill">✉ Letter from your Envelope</span>
       </div>
 
       <!-- Unfolded Letter -->
-      <div class="recipient-emerging-letter" id="recipientEmergingLetter">
+      <div class="recipient-emerging-letter letter-unfolded" id="recipientEmergingLetter">
         <div class="stationery-paper-wrapper">
           <div class="paper-washi-top-left" aria-hidden="true"></div>
           <div class="paper-washi-top-right" aria-hidden="true"></div>
+          <div class="paper-postal-stamp" aria-hidden="true">
+            <span class="stamp-inner-art">🌸</span>
+            <span class="stamp-denom">15p</span>
+            <div class="stamp-postmark-ring">LONDON 1984</div>
+          </div>
           <div class="stationery-paper-sheet vintage-cream font-handwriting" id="recipientLetterSheet">
             <div class="placed-stickers-layer" id="recLetterStickerCanvas"></div>
             <div class="stationery-header-fields">
@@ -590,15 +607,15 @@
 
   <!-- Scripts: Direct parallel fetch and synchronous execution -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/flowers-data.js?v=3.7"></script>
-  <script src="js/flower-svgs.js?v=3.7"></script>
-  <script src="js/audio-synth.js?v=3.7"></script>
-  <script src="js/bouquet-builder.js?v=3.7"></script>
-  <script src="js/letter-editor.js?v=3.7"></script>
-  <script src="js/envelope-anim.js?v=3.7"></script>
-  <script src="js/alphabet-garden.js?v=3.7"></script>
-  <script src="js/share-engine.js?v=3.7"></script>
-  <script src="js/supabase-client.js?v=3.7"></script>
-  <script src="js/app.js?v=3.7"></script>
+  <script src="js/flowers-data.js?v=3.8"></script>
+  <script src="js/flower-svgs.js?v=3.8"></script>
+  <script src="js/audio-synth.js?v=3.8"></script>
+  <script src="js/bouquet-builder.js?v=3.8"></script>
+  <script src="js/letter-editor.js?v=3.8"></script>
+  <script src="js/envelope-anim.js?v=3.8"></script>
+  <script src="js/alphabet-garden.js?v=3.8"></script>
+  <script src="js/share-engine.js?v=3.8"></script>
+  <script src="js/supabase-client.js?v=3.8"></script>
+  <script src="js/app.js?v=3.8"></script>
 </body>
 </html>

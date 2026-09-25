@@ -91,50 +91,36 @@ class EnvelopeAnimator {
     const emergingLetter = document.getElementById('recipientEmergingLetter');
     const prompt = document.getElementById('unsealPromptText');
 
-    if (!envelope) return;
-
-    // Step 1: Wax seal breaks
     try { audioSynth.playSparkleUnseal(); } catch (e) {}
+    try { this.fireConfetti(); } catch (e) {}
+
     if (waxSeal) {
       waxSeal.classList.add('wax-broken');
     }
+    if (flap) {
+      flap.classList.add('flap-opened');
+    }
+    if (peekingLetter) {
+      peekingLetter.classList.add('letter-rising-out');
+    }
+    if (emergingBouquet) {
+      emergingBouquet.classList.add('bouquet-emerged');
+    }
+    if (emergingLetter) {
+      emergingLetter.classList.add('letter-unfolded');
+    }
     if (prompt) {
-      prompt.innerHTML = '✦ unsealing your special delivery... ✦';
+      prompt.innerHTML = '✦ unsealed with love ✦ (tap envelope to flutter petals 🌸)';
     }
 
-    // Step 2: Flap lifts up & letter rises out of pocket
-    setTimeout(() => {
-      if (flap) {
-        flap.classList.add('flap-opened');
-      }
-      if (peekingLetter) {
-        peekingLetter.classList.add('letter-rising-out');
-      }
-      try { audioSynth.playPaperRustle(); } catch (e) {}
-    }, 400);
+    // Smoothly scroll down so the recipient immediately sees their handwritten letter
+    if (emergingLetter) {
+      setTimeout(() => {
+        emergingLetter.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 400);
+    }
 
-    // Step 3: Bouquet rises and blooms
-    setTimeout(() => {
-      if (emergingBouquet) {
-        emergingBouquet.classList.add('bouquet-emerged');
-      }
-      try { this.fireConfetti(); } catch (e) {}
-      // Smoothly scroll down so the recipient immediately sees the blooming bouquet & letter!
-      const target = emergingBouquet || emergingLetter;
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 900);
-
-    // Step 4: Letter slides out and unfolds
-    setTimeout(() => {
-      if (emergingLetter) {
-        emergingLetter.classList.add('letter-unfolded');
-      }
-      try { audioSynth.playPaperRustle(); } catch (e) {}
-      if (prompt) prompt.innerHTML = '✦ unsealed with love ✦';
-      if (typeof onComplete === 'function') onComplete();
-    }, 1500);
+    if (typeof onComplete === 'function') onComplete();
   }
 
   /**

@@ -598,8 +598,10 @@ class PosyTextsApp {
   hideRecipientLoading() {
     const loadingBox = document.getElementById('recipientLoadingBox');
     const envContainer = document.getElementById('recipientEnvelopeContainer');
+    const unfoldedExp = document.querySelector('.recipient-unfolded-experience');
     if (loadingBox) loadingBox.classList.add('hidden');
     if (envContainer) envContainer.classList.remove('hidden');
+    if (unfoldedExp) unfoldedExp.classList.remove('hidden');
   }
 
   renderRecipientNotFound() {
@@ -636,9 +638,23 @@ class PosyTextsApp {
     const letterFromSpan = document.getElementById('recipientFromLine');
     const bloomOwnBtn = document.getElementById('bloomOwnPosyBtn');
     const unsealEnvelopeBtn = document.getElementById('recipientEnvelope');
+    const unfoldedExp = document.querySelector('.recipient-unfolded-experience');
+    const flap = document.getElementById('recipientFlap');
+    const emergingBouquet = document.getElementById('recipientEmergingBouquet');
+    const emergingLetter = document.getElementById('recipientEmergingLetter');
+    const peekingLetter = document.getElementById('recipientPeekingLetter');
+    const promptText = document.getElementById('unsealPromptText');
 
     if (creatorView) creatorView.classList.add('hidden');
     if (recipientView) recipientView.classList.remove('hidden');
+    if (unfoldedExp) unfoldedExp.classList.remove('hidden');
+
+    // Make sure envelope is open with bouquet blooming out and letter unfolded
+    if (flap) flap.classList.add('flap-opened');
+    if (emergingBouquet) emergingBouquet.classList.add('bouquet-emerged');
+    if (emergingLetter) emergingLetter.classList.add('letter-unfolded');
+    if (peekingLetter) peekingLetter.classList.add('letter-rising-out');
+    if (promptText) promptText.innerHTML = '✦ unsealed with love ✦ (tap envelope to flutter petals 🌸)';
 
     const defaultPoeticMsg = "I had a little dream about you today... so I made you this bouquet. Each flower blooms from the letters of your name.";
     const displayRecipient = (data.recipientName && data.recipientName.trim()) ? data.recipientName.trim() : 'Friend';
@@ -648,10 +664,10 @@ class PosyTextsApp {
     if (recipientNameSpan) recipientNameSpan.textContent = displayRecipient;
     if (envelopeName) envelopeName.textContent = displayRecipient;
 
-    // Prepare bouquet
+    // Prepare bouquet inside the envelope
     bouquetBuilder.renderBouquet(displayRecipient, bouquetContainer);
 
-    // Prepare letter
+    // Prepare handwritten letter sheet
     if (letterSheet) {
       letterSheet.className = `stationery-paper-sheet ${data.paperStyle || 'vintage-cream'} ${data.fontStyle || 'font-handwriting'}`;
       const toEl = document.getElementById('recLetterTo');
@@ -688,35 +704,17 @@ class PosyTextsApp {
       }
     }
 
-    // Interactive Unseal on Envelope Tap
+    // Interactive celebration when recipient taps envelope or prompt
     if (unsealEnvelopeBtn) {
-      const triggerUnseal = () => {
-        unsealEnvelopeBtn.classList.add('unsealing-active');
-        envelopeAnimator.startUnsealingSequence(() => {
-          const prompt = document.getElementById('unsealPromptText');
-          if (prompt) prompt.innerHTML = `✦ unsealed with love ✦`;
-        });
-      };
+      unsealEnvelopeBtn.addEventListener('click', () => {
+        envelopeAnimator.startUnsealingSequence();
+      });
 
-      unsealEnvelopeBtn.addEventListener('click', triggerUnseal, { once: true });
-
-      const promptText = document.getElementById('unsealPromptText');
       if (promptText) {
         promptText.style.cursor = 'pointer';
         promptText.addEventListener('click', () => {
-          if (!unsealEnvelopeBtn.classList.contains('unsealing-active')) {
-            unsealEnvelopeBtn.click();
-          }
+          envelopeAnimator.startUnsealingSequence();
         });
-      }
-
-      // If already marked as opened, auto-unseal after brief delay so recipient never misses content
-      if (data.opened) {
-        setTimeout(() => {
-          if (!unsealEnvelopeBtn.classList.contains('unsealing-active')) {
-            unsealEnvelopeBtn.click();
-          }
-        }, 1200);
       }
     }
 
