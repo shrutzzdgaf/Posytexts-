@@ -48,6 +48,11 @@ class LetterEditor {
     const paperSheet = document.getElementById('stationeryPaperSheet');
 
     if (textarea) {
+      const defaultPoeticMsg = "I had a little dream about you today... so I made you this bouquet. Each flower blooms from the letters of your name.";
+      if (!textarea.value.trim()) {
+        textarea.value = defaultPoeticMsg;
+        this.message = defaultPoeticMsg;
+      }
       // Auto-resize on input
       textarea.addEventListener('input', () => {
         this.message = textarea.value;
@@ -204,14 +209,18 @@ class LetterEditor {
     const recipientEmailInput = document.getElementById('letterRecipientEmail');
     const senderEmailInput = document.getElementById('letterSenderEmail');
 
+    const defaultPoeticMsg = "I had a little dream about you today... so I made you this bouquet. Each flower blooms from the letters of your name.";
+    const userMessage = (textarea && textarea.value.trim()) ? textarea.value.trim() : (this.message.trim() || defaultPoeticMsg);
+    const userSender = (senderInput && senderInput.value.trim()) ? senderInput.value.trim() : (this.senderName.trim() || 'A Secret Admirer');
+
     return {
-      recipientName: this.recipientName,
+      recipientName: this.recipientName || 'Friend',
       recipientEmail: recipientEmailInput ? recipientEmailInput.value.trim() : this.recipientEmail,
-      senderName: senderInput ? senderInput.value.trim() : this.senderName,
+      senderName: userSender,
       senderEmail: senderEmailInput ? senderEmailInput.value.trim() : this.senderEmail,
-      message: textarea ? textarea.value.trim() : this.message,
-      paperStyle: this.currentPaper,
-      fontStyle: this.currentFont,
+      message: userMessage,
+      paperStyle: this.currentPaper || 'vintage-cream',
+      fontStyle: this.currentFont || 'font-handwriting',
       stickers: this.stickers.map(s => ({
         id: s.id,
         x: s.x,

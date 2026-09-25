@@ -58,10 +58,10 @@
   </style>
 
   <!-- Stylesheets (dual-path: supports both css/ subfolder and root files with cache busting) -->
-  <link rel="stylesheet" href="css/style.css?v=3.6" onerror="this.onerror=null;this.href='style.css?v=3.6';" />
-  <link rel="stylesheet" href="css/stationery.css?v=3.6" onerror="this.onerror=null;this.href='stationery.css?v=3.6';" />
-  <link rel="stylesheet" href="css/bouquet.css?v=3.6" onerror="this.onerror=null;this.href='bouquet.css?v=3.6';" />
-  <link rel="stylesheet" href="css/envelope.css?v=3.6" onerror="this.onerror=null;this.href='envelope.css?v=3.6';" />
+  <link rel="stylesheet" href="css/style.css?v=3.7" onerror="this.onerror=null;this.href='style.css?v=3.7';" />
+  <link rel="stylesheet" href="css/stationery.css?v=3.7" onerror="this.onerror=null;this.href='stationery.css?v=3.7';" />
+  <link rel="stylesheet" href="css/bouquet.css?v=3.7" onerror="this.onerror=null;this.href='bouquet.css?v=3.7';" />
+  <link rel="stylesheet" href="css/envelope.css?v=3.7" onerror="this.onerror=null;this.href='envelope.css?v=3.7';" />
 </head>
 <body>
 
@@ -322,6 +322,9 @@
     <div class="recipient-interactive-envelope" id="recipientEnvelope" title="Click to unseal your bouquet & letter">
       <div class="envelope-floral-liner"></div>
       <div class="envelope-flap-top" id="recipientFlap"></div>
+      <div class="envelope-peeking-letter" id="recipientPeekingLetter">
+        <span class="peeking-paper-tag">💌 a little posy for you...</span>
+      </div>
       <div class="recipient-address-label">
         <div class="envelope-recipient-to">Special Delivery for:</div>
         <div class="envelope-recipient-name" id="recipientEnvelopeName">YOU</div>
@@ -587,15 +590,15 @@
 
   <!-- Scripts: Direct parallel fetch and synchronous execution -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/flowers-data.js?v=3.6"></script>
-  <script src="js/flower-svgs.js?v=3.6"></script>
-  <script src="js/audio-synth.js?v=3.6"></script>
-  <script src="js/bouquet-builder.js?v=3.6"></script>
-  <script src="js/letter-editor.js?v=3.6"></script>
-  <script src="js/envelope-anim.js?v=3.6"></script>
-  <script src="js/alphabet-garden.js?v=3.6"></script>
-  <script src="js/share-engine.js?v=3.6"></script>
-  <script src="js/supabase-client.js?v=3.6"></script>
-  <script src="js/app.js?v=3.6"></script>
+  <script src="js/flowers-data.js?v=3.7"></script>
+  <script src="js/flower-svgs.js?v=3.7"></script>
+  <script src="js/audio-synth.js?v=3.7"></script>
+  <script src="js/bouquet-builder.js?v=3.7"></script>
+  <script src="js/letter-editor.js?v=3.7"></script>
+  <script src="js/envelope-anim.js?v=3.7"></script>
+  <script src="js/alphabet-garden.js?v=3.7"></script>
+  <script src="js/share-engine.js?v=3.7"></script>
+  <script src="js/supabase-client.js?v=3.7"></script>
+  <script src="js/app.js?v=3.7"></script>
 </body>
 </html>

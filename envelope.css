@@ -229,6 +229,43 @@
   background: #DFCDBC !important;
 }
 
+/* Peeking Letter inside Recipient Envelope */
+.envelope-peeking-letter {
+  position: absolute;
+  top: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  height: 160px;
+  background: #FFFDF8;
+  border: 1.5px solid #D5C7B7;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  z-index: 10;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 10px;
+  font-family: var(--font-handwriting);
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  transition: transform 0.8s var(--ease-spring), opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.envelope-peeking-letter .peeking-paper-tag {
+  background: #FAF6EE;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px dashed #C8B6A6;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+}
+
+.envelope-peeking-letter.letter-rising-out {
+  transform: translate(-50%, -75px) scale(1.04);
+}
+
 .recipient-emerging-bouquet {
   position: relative;
   opacity: 0;

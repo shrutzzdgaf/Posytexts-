@@ -640,11 +640,16 @@ class PosyTextsApp {
     if (creatorView) creatorView.classList.add('hidden');
     if (recipientView) recipientView.classList.remove('hidden');
 
-    if (recipientNameSpan) recipientNameSpan.textContent = data.recipientName || 'You';
-    if (envelopeName) envelopeName.textContent = data.recipientName || 'You';
+    const defaultPoeticMsg = "I had a little dream about you today... so I made you this bouquet. Each flower blooms from the letters of your name.";
+    const displayRecipient = (data.recipientName && data.recipientName.trim()) ? data.recipientName.trim() : 'Friend';
+    const displaySender = (data.senderName && data.senderName.trim()) ? data.senderName.trim() : 'A Secret Admirer';
+    const displayMsg = (data.message && data.message.trim()) ? data.message.trim() : defaultPoeticMsg;
+
+    if (recipientNameSpan) recipientNameSpan.textContent = displayRecipient;
+    if (envelopeName) envelopeName.textContent = displayRecipient;
 
     // Prepare bouquet
-    bouquetBuilder.renderBouquet(data.recipientName, bouquetContainer);
+    bouquetBuilder.renderBouquet(displayRecipient, bouquetContainer);
 
     // Prepare letter
     if (letterSheet) {
@@ -654,10 +659,10 @@ class PosyTextsApp {
       const bodyEl = document.getElementById('recLetterBody');
       const fromEl = document.getElementById('recLetterFrom');
 
-      if (toEl) toEl.textContent = data.recipientName || 'Friend';
-      if (dearEl) dearEl.textContent = data.recipientName || 'Friend';
-      if (bodyEl) bodyEl.innerHTML = (data.message || '').replace(/\n/g, '<br/>');
-      if (fromEl) fromEl.textContent = data.senderName || 'Someone who cares';
+      if (toEl) toEl.textContent = displayRecipient;
+      if (dearEl) dearEl.textContent = displayRecipient;
+      if (bodyEl) bodyEl.innerHTML = displayMsg.replace(/\n/g, '<br/>');
+      if (fromEl) fromEl.textContent = displaySender;
 
       // Recreate stickers if any
       const stickerCanvas = document.getElementById('recLetterStickerCanvas');
@@ -694,6 +699,25 @@ class PosyTextsApp {
       };
 
       unsealEnvelopeBtn.addEventListener('click', triggerUnseal, { once: true });
+
+      const promptText = document.getElementById('unsealPromptText');
+      if (promptText) {
+        promptText.style.cursor = 'pointer';
+        promptText.addEventListener('click', () => {
+          if (!unsealEnvelopeBtn.classList.contains('unsealing-active')) {
+            unsealEnvelopeBtn.click();
+          }
+        });
+      }
+
+      // If already marked as opened, auto-unseal after brief delay so recipient never misses content
+      if (data.opened) {
+        setTimeout(() => {
+          if (!unsealEnvelopeBtn.classList.contains('unsealing-active')) {
+            unsealEnvelopeBtn.click();
+          }
+        }, 1200);
+      }
     }
 
     const printKeepsakeBtn = document.getElementById('printKeepsakeBtn');

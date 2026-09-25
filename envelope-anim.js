@@ -86,23 +86,31 @@ class EnvelopeAnimator {
     const envelope = document.getElementById('recipientEnvelope');
     const waxSeal = document.getElementById('recipientWaxSeal');
     const flap = document.getElementById('recipientFlap');
+    const peekingLetter = document.getElementById('recipientPeekingLetter');
     const emergingBouquet = document.getElementById('recipientEmergingBouquet');
     const emergingLetter = document.getElementById('recipientEmergingLetter');
+    const prompt = document.getElementById('unsealPromptText');
 
     if (!envelope) return;
 
     // Step 1: Wax seal breaks
-    audioSynth.playSparkleUnseal();
+    try { audioSynth.playSparkleUnseal(); } catch (e) {}
     if (waxSeal) {
       waxSeal.classList.add('wax-broken');
     }
+    if (prompt) {
+      prompt.innerHTML = '✦ unsealing your special delivery... ✦';
+    }
 
-    // Step 2: Flap lifts up
+    // Step 2: Flap lifts up & letter rises out of pocket
     setTimeout(() => {
       if (flap) {
         flap.classList.add('flap-opened');
       }
-      audioSynth.playPaperRustle();
+      if (peekingLetter) {
+        peekingLetter.classList.add('letter-rising-out');
+      }
+      try { audioSynth.playPaperRustle(); } catch (e) {}
     }, 400);
 
     // Step 3: Bouquet rises and blooms
@@ -110,7 +118,12 @@ class EnvelopeAnimator {
       if (emergingBouquet) {
         emergingBouquet.classList.add('bouquet-emerged');
       }
-      this.fireConfetti();
+      try { this.fireConfetti(); } catch (e) {}
+      // Smoothly scroll down so the recipient immediately sees the blooming bouquet & letter!
+      const target = emergingBouquet || emergingLetter;
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }, 900);
 
     // Step 4: Letter slides out and unfolds
@@ -118,8 +131,9 @@ class EnvelopeAnimator {
       if (emergingLetter) {
         emergingLetter.classList.add('letter-unfolded');
       }
-      audioSynth.playPaperRustle();
-      if (onComplete) onComplete();
+      try { audioSynth.playPaperRustle(); } catch (e) {}
+      if (prompt) prompt.innerHTML = '✦ unsealed with love ✦';
+      if (typeof onComplete === 'function') onComplete();
     }, 1500);
   }
 
