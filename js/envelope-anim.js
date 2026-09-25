@@ -15,19 +15,35 @@ class EnvelopeAnimator {
    * @param {Function} onComplete - Callback after sealing finishes
    */
   startSealingSequence(onComplete) {
-    const stage = document.getElementById('sealingStage');
+    const stage = document.getElementById('sealingSection') || document.getElementById('sealingStage');
     const foldingLetter = document.getElementById('foldingLetterProxy');
     const envelope = document.getElementById('sealingEnvelope');
     const flap = document.getElementById('sealingFlap');
     const waxSeal = document.getElementById('sealingWaxSeal');
 
-    if (!stage || !envelope) return;
+    // Clean reset any prior animations
+    if (foldingLetter) {
+      foldingLetter.classList.remove('folding-active', 'sliding-into-envelope');
+    }
+    if (flap) {
+      flap.classList.remove('flap-closed');
+    }
+    if (waxSeal) {
+      waxSeal.classList.remove('stamped');
+    }
+    this.isSealed = false;
+
+    if (!stage || !envelope) {
+      console.warn('[Envelope] Stage or envelope not found, executing callback directly');
+      if (typeof onComplete === 'function') onComplete();
+      return;
+    }
 
     stage.classList.remove('hidden');
     stage.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
     // Step 1: Letter paper folding (0ms - 800ms)
-    audioSynth.playPaperRustle();
+    try { audioSynth.playPaperRustle(); } catch (e) {}
     if (foldingLetter) {
       foldingLetter.classList.add('folding-active');
     }
@@ -37,7 +53,7 @@ class EnvelopeAnimator {
       if (foldingLetter) {
         foldingLetter.classList.add('sliding-into-envelope');
       }
-      audioSynth.playPaperRustle();
+      try { audioSynth.playPaperRustle(); } catch (e) {}
     }, 850);
 
     // Step 3: Envelope flap closes down (1600ms - 2200ms)
@@ -52,13 +68,13 @@ class EnvelopeAnimator {
       if (waxSeal) {
         waxSeal.classList.add('stamped');
       }
-      audioSynth.playWaxSeal();
-      this.fireConfetti();
+      try { audioSynth.playWaxSeal(); } catch (e) {}
+      try { this.fireConfetti(); } catch (e) {}
       this.isSealed = true;
 
       // Callback to show send options modal / panel
-      if (onComplete) {
-        setTimeout(onComplete, 800);
+      if (typeof onComplete === 'function') {
+        setTimeout(onComplete, 600);
       }
     }, 2250);
   }

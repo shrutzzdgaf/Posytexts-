@@ -162,31 +162,47 @@ class PosyTextsApp {
     // "seal it? 💌"
     if (sealLetterBtn) {
       sealLetterBtn.addEventListener('click', async () => {
-        const letterData = letterEditor.getLetterData();
-        if (!letterData.message && !letterData.recipientName) {
-          alert('Write a little message before sealing! 💌');
-          return;
-        }
-
-        sealLetterBtn.disabled = true;
-
-        // Populate the folding proxy letter
-        this.populateFoldingProxy(letterData);
-
-        // Initiate Supabase cloud save in background while 3D animation plays
-        const savePromise = window.posySupabase.savePosy(letterData);
-
-        // Run 3D sealing animation
-        envelopeAnimator.startSealingSequence(async () => {
-          sealLetterBtn.disabled = false;
-          let saveResult = null;
-          try {
-            saveResult = await savePromise;
-          } catch (e) {
-            console.warn('Cloud save notice:', e);
+        try {
+          const letterData = letterEditor.getLetterData();
+          if (!letterData.message && !letterData.recipientName) {
+            alert('Write a little message before sealing! 💌');
+            return;
           }
-          this.openShareModal(letterData, saveResult);
-        });
+
+          sealLetterBtn.disabled = true;
+          sealLetterBtn.textContent = 'sealing... 💌';
+
+          // Initialize audio context on direct user gesture
+          try { audioSynth.init(); } catch (e) {}
+
+          // Switch screen view to the 3D sealing section
+          this.showSection('sealingSection');
+
+          // Populate the folding proxy letter
+          this.populateFoldingProxy(letterData);
+
+          // Initiate Supabase cloud save in background while 3D animation plays
+          const savePromise = window.posySupabase.savePosy(letterData);
+
+          // Run 3D sealing animation
+          envelopeAnimator.startSealingSequence(async () => {
+            sealLetterBtn.disabled = false;
+            sealLetterBtn.textContent = 'seal it? 💌';
+            let saveResult = null;
+            try {
+              saveResult = await savePromise;
+            } catch (e) {
+              console.warn('Cloud save notice:', e);
+            }
+            this.openShareModal(letterData, saveResult);
+          });
+        } catch (err) {
+          console.error('[Sealing] Error during seal flow:', err);
+          sealLetterBtn.disabled = false;
+          sealLetterBtn.textContent = 'seal it? 💌';
+          const letterData = letterEditor.getLetterData();
+          this.openShareModal(letterData, null);
+        }
       });
     }
   }
@@ -255,6 +271,11 @@ class PosyTextsApp {
       if (heroSection) heroSection.classList.add('hidden');
       if (letterSection) letterSection.classList.remove('hidden');
       if (sealingSection) sealingSection.classList.add('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (sectionId === 'sealingSection') {
+      if (heroSection) heroSection.classList.add('hidden');
+      if (letterSection) letterSection.classList.add('hidden');
+      if (sealingSection) sealingSection.classList.remove('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
